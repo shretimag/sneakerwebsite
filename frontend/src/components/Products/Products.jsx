@@ -6,35 +6,34 @@ const filters = [
     id: "brand",
     name: "Brand",
     options: [
-      { value: "Nike", label: "Nike" },
-      { value: "Reebok", label: "Reebok" },
-      { value: "Vans", label: "Vans" },
-      { value: "Adidas", label: "Adidas" },
+      { value: "NIKE", label: "Nike" },
+      { value: "REEBOK", label: "Reebok" },
+      { value: "VANS", label: "Vans" },
+      { value: "ADIDAS", label: "Adidas" },
     ],
   },
   {
     id: "gender",
     name: "Gender",
     options: [
-      { value: "Mens", label: "Mens" },
-      { value: "Women", label: "Women" },
+      { value: "MEN", label: "Men" },
+      { value: "WOMEN", label: "Women" },
     ],
   },
   {
     id: "category",
     name: "Category",
     options: [
-      { value: "Formal", label: "Formal" },
-      { value: "Casual", label: "Casual" },
-      { value: "Running", label: "Running" },
-      { value: "FootBall", label: "FootBall" },
+      { value: "FORMAL", label: "Formal" },
+      { value: "CASUAL", label: "Casual" },
+      { value: "RUNNING", label: "Running" },
+      { value: "FOOTBALL", label: "FootBall" },
     ],
   },
 ];
 
 function Products() {
-  const[shoes2, setShoes2]=React.useState([]);
-  const [shoes, setShoes] = React.useState([
+  let [shoes, setShoes] = React.useState([
     {
       _id: "65802743ace4c0f600d98fe5",
       name: "Nike React Infinity Run Flyknit",
@@ -48,6 +47,11 @@ function Products() {
     },
   ]);
 
+  const filterObject = {
+    brand: [],
+    gender: [],
+    category: [],
+  };
 
   useEffect(() => {
     async function getShoes() {
@@ -58,7 +62,6 @@ function Products() {
         }
         const responseData = await response.json();
         setShoes(responseData);
-        setShoes2(responseData);
       } catch (error) {
         console.log(error);
       }
@@ -66,56 +69,58 @@ function Products() {
     getShoes();
   }, [1]);
 
-  let filteredBrandArray = React.useState([]);
-  let filteredGenderArray = React.useState([]);
-  let filteredCategoryArray = React.useState([]);
-
-  function changeBrandItemsNow() {
-    let users = [];
-    filteredBrandArray.map((brandName) => {
-      shoes2.map((item) => {
-        if (item.brand.toLowerCase() === brandName) {
-          users.push(item);
-        }
+  const filterShoesList = async () => {
+    let response;
+    console.log("rgewgewf", filterObject);
+    try {
+      response = await fetch("http://localhost:5000/products/filter", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(filterObject),
       });
-    });
-    setShoes([...users]);
-  }
 
-  function setChange(e) {
-    let check = e.target.checked;
-    let value = e.target.value.toLowerCase();
-    console.log(e);
+      if (!response.ok) {
+        throw new Error("error occured try again later");
+      }
+      const responseData = await response.json();
+      setShoes(responseData);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-    if (e.target.name.toLowerCase() === "brand") {
-      if (check) {
-        filteredBrandArray.push(value);
-      } else {
-        filteredBrandArray = filteredBrandArray.filter(
-          (val) => val.toLowerCase() !== value
+  function addFilterObject(e) {
+    if (e.target.checked) {
+      if (e.target.name == "brand") {
+        filterObject.brand.push(e.target.value);
+      }
+      if (e.target.name == "gender") {
+        filterObject.gender.push(e.target.value);
+      }
+      if (e.target.name == "category") {
+        filterObject.category.push(e.target.value);
+      }
+    } else {
+      if (e.target.name == "brand") {
+        filterObject.brand = filterObject.brand.filter(
+          (value) => value !== e.target.value
         );
       }
-      changeBrandItemsNow();
-    } else if (e.target.name.toLowerCase === "gender") {
-      if (check) {
-        filteredGenderArray.push(value);
-      } else {
-        filteredGenderArray = filteredGenderArray.filter(
-          (val) => val.toLowerCase() !== value
+      if (e.target.name == "gender") {
+        filterObject.gender = filterObject.gender.filter(
+          (value) => value !== e.target.value
         );
       }
-      changeGenderItemsNow();
-    } else if (e.target.value.toLowerCase() === "category") {
-      if (check) {
-        filteredCategoryArray.push(value);
-      } else {
-        filteredCategoryArray = filteredCategoryArray.filter(
-          (val) => val.toLowerCase() !== value
+      if (e.target.name == "category") {
+        filterObject.category = filterObject.category.filter(
+          (value) => value !== e.target.value
         );
       }
-      changeCategoryItemsNow();
     }
 
+    filterShoesList();
   }
 
   return (
@@ -147,7 +152,7 @@ function Products() {
                           defaultValue={option.value}
                           type="checkbox"
                           className="h-4 w-4 rounded border-gray-300 text-black focus:ring-black"
-                          onClick={setChange}
+                          onClick={addFilterObject}
                         />
                         <label
                           htmlFor={`${filter.id}-${option.value}`}
