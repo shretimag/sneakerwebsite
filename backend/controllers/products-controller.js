@@ -6,7 +6,6 @@ const allProducts = async (req, res, next) => {
   try {
     products = await Shoes.find();
   } catch (err) {
-    console.log(err);
     return next(new HttpError("could not found Shoes", 404));
   }
   res.json(products);
@@ -23,7 +22,6 @@ const productById = async (req, res, next) => {
   if (!shoe) {
     return next(new HttpError("can not find particular sneakers", 404));
   }
-  console.log(shoe);
   res.json(shoe);
 };
 

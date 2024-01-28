@@ -21,7 +21,8 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    Cart : []
+    Cart : [] , 
+    Orders : []
 });
 
 module.exports = mongoose.model('User', userSchema);

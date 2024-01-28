@@ -1,11 +1,12 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { validationResult } = require("express-validator");
-
+const mailService = require("../services/mailer");
+const MailTemplates = require("../services/mailTemplate");
+const nodemailer = require("nodemailer");
 const HttpError = require("../utils/Http-Error");
 const Shoes = require("../models/products");
 const User = require("../models/User");
-
 
 const signup = async (req, res, next) => {
   const errors = validationResult(req);
@@ -61,9 +62,30 @@ const signup = async (req, res, next) => {
   } catch (err) {
     return next(new HttpError("signning up failed try again later ", 500));
   }
-   
-  console.log(token , createUser._id);
-  res.json({
+
+  // const message = {
+  //   from: "aggarwalsiddharth49@gmail.com",
+  //   to: Email,
+  //   subject: "Thanks for Signing up ",
+  //   html: MailTemplates.SignUpMail(Name),
+  // };
+  // const transporter = mailService.ConfigMail();
+
+  // transporter
+  //   .sendMail(message)
+  //   .then(() => {
+  //     return res.status(201).json({
+  //       status: "success",
+  //       message: "Mail sent successfully",
+  //       Email: Email,
+  //       Token: token,
+  //       UserId: createUser._id,
+  //     });
+  //   })
+  //   .catch(async (error) => {
+  //     console.log(error);
+  //   });
+  res.status(201).json({
     Token: token,
     UserId: createUser._id,
   });

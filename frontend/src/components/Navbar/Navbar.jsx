@@ -19,6 +19,10 @@ const menuItems = [
     name: 'Cart',
     href: '/cart',
   },
+  {
+    name: 'Order',
+    href: '/orders',
+  },
 ]
 
 

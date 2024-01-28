@@ -23,11 +23,8 @@ router.post(
 );
 
 
-router.use(userAuthMiddleware);
-
-
-router.get("/user/:uid", userControllers.getUser);
-router.put("/user/:uid/:pid", userControllers.updateUserProduct);
-router.patch("/user/:uid/:pid", userControllers.deleteUserProduct);
+router.get("/user/:uid",userAuthMiddleware, userControllers.getUser);
+router.put("/user/:uid/:pid",userAuthMiddleware,  userControllers.updateUserProduct);
+router.patch("/user/:uid/:pid",userAuthMiddleware,  userControllers.deleteUserProduct);
 
 module.exports = router;

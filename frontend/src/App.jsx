@@ -7,6 +7,7 @@ import CartPage from "./Pages/CartPage";
 import SignUpPage from "./Pages/SignUpPage";
 import LoginPage from "./Pages/LoginPage";
 import StartPage from "./Pages/StartPage";
+import OrderPage from "./Pages/OrderPage";
 import { AuthContext } from "./Context/auth-context";
 import { useAuth } from "./Hooks/auth-hook";
 
@@ -33,6 +34,7 @@ function App() {
           <Route path="cart" element={<CartPage />} />
           <Route path="signup" element={<SignUpPage />} />
           <Route path="login" element={<LoginPage />} />
+          <Route path="orders" element={<OrderPage />} />
         </Route>
       )
     )
@@ -44,6 +46,7 @@ function App() {
             <Route path="product/:pid" element={<ProductByIdPage />} />
             <Route path="products" element={<ProductsPage />} />
             <Route path="cart" element={<CartPage />} />
+            <Route path="orders" element={<OrderPage />} />
           </Route>
         )
       )

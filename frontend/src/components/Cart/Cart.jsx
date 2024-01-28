@@ -67,7 +67,7 @@ function Cart() {
     }
   }
 
-  const amount = netPrice * 100;
+  const amount = netPrice*100*90 ;
   const currency = "INR";
   const receiptId = "qwsaq1";
 
@@ -81,13 +81,13 @@ function Cart() {
       }),
       headers: {
         "Content-Type": "application/json",
-      },
+      }, 
     });
     const order = await response.json();
     console.log(order);
 
     var options = {
-      key: "rzp_test_WwibcOUYEpxvzb",
+      key: "rzp_test_pBjWhXmDvQr9bP",
       amount,
       currency,
       name: "SneakHead",
@@ -103,7 +103,7 @@ function Cart() {
           "http://localhost:5000/order/validate",
           {
             method: "POST",
-            body: JSON.stringify(body),
+            body: JSON.stringify({...body , amount : amount}),
             headers: {
               "Content-Type": "application/json",
             },
