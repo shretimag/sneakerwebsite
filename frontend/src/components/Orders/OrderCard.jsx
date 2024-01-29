@@ -1,8 +1,9 @@
 import React from "react";
 
 function OrderCard(props) {
-  props= props.Items;
-  console.log(props);
+  props = props.orderItem;
+ props = props[0];
+
   return (
     <div className="mx-auto my-4 max-w-4xl md:my-6">
       <div className="overflow-hidden rounded-xl border border-gray-100 shadow">
@@ -35,7 +36,7 @@ function OrderCard(props) {
                     </div>
                     <div className="ml-auto flex flex-col items-end justify-between">
                       <p className="text-right text-sm font-bold text-gray-900">
-                        {product.price}
+                       $ {product.price}
                       </p>
                     </div>
                   </li>
@@ -45,7 +46,7 @@ function OrderCard(props) {
               <ul className="mt-6 space-y-3">
                 <li className="flex items-center justify-between">
                   <p className="text-sm font-medium ">Total</p>
-                  <p className="text-sm font-bold ">₹ {props.amount}</p>
+                  <p className="text-sm font-bold ">₹ {props.amount /100}</p>
                 </li>
               </ul>
             </div>

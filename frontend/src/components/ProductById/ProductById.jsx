@@ -35,27 +35,25 @@ const ProductById = () => {
   }, [1]);
 
   async function addUserItem() {
-    console.log(auth);
+  
     let response;
     if(!auth.isLoggedIn){
      return  setIsNotAvailable(true);
     }
     try {
       response = await fetch(
-        `http://localhost:5000/user/${auth.userId}/${pid}`,
+        `http://localhost:5000/user/${pid}`,
         {
           method: "PUT",
           headers:{
-            Authorization: 'Bearer ' + auth.token
+            Authorization: "Bearer " + auth.token
           }
         }
         
       );
-
       if (!response.ok) {
         throw new Error("error occured try again later");
       }
-      let responseData = await response.json();
       setIsAdded(true);
       setTimeout(()=> setIsAdded(false) ,1000);
     } catch (error) {

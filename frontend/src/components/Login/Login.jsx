@@ -9,7 +9,6 @@ import { AuthContext } from "../../Context/auth-context";
 
 function Login() {
   const auth = useContext(AuthContext);
-
   const [isLoading, setIsLoading] = React.useState(false);
   const [isError, setIsError] = React.useState(false);
   const [formData, setFormData] = React.useState({ Email: "", Password: "" });
@@ -30,7 +29,6 @@ function Login() {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    console.log("inside loginnn");
     let response;
     try {
       setIsLoading(true);

@@ -149,7 +149,8 @@ const login = async (req, res, next) => {
 };
 
 const getUser = async (req, res, next) => {
-  let userId = req.params.uid;
+
+  const userId = req.userData.userId;
   let user;
   try {
     user = await User.findById(userId);
@@ -159,13 +160,13 @@ const getUser = async (req, res, next) => {
   if (!user) {
     return next(new HttpError("can not find user try agin later ", 404));
   }
-
-  console.log(user);
+console.log(user);
   res.json(user);
 };
 
 const updateUserProduct = async (req, res, next) => {
-  const userId = req.params.uid;
+ 
+  const userId = req.userData.userId;
   const productId = req.params.pid;
 
   let user;
@@ -182,24 +183,19 @@ const updateUserProduct = async (req, res, next) => {
   if (!product) {
     return next(new HttpError("error occured try agian later ", 404));
   }
-  let item = product;
-
-  user.Cart = [...user.Cart, item];
-
+  
+  user.Cart = [...user.Cart, product];
   try {
     await user.save();
   } catch (error) {
     return next(new HttpError("error occured ", 404));
   }
-  console.log(user);
-
   res.json("successfully added to cart");
 };
 
 const deleteUserProduct = async (req, res, next) => {
-  let userId = req.params.uid;
+  const userId = req.userData.userId;
   let productId = req.params.pid;
-
   let user;
   let product;
   try {
@@ -232,7 +228,6 @@ const deleteUserProduct = async (req, res, next) => {
   } catch (error) {
     return next(new HttpError("error occur in deleting item from cart", 404));
   }
-  console.log(user);
   res.json(user);
 };
 

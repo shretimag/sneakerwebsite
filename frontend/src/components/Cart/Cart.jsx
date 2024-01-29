@@ -13,19 +13,19 @@ function Cart() {
   let [userCart, setUserCart] = React.useState([]);
   let [isupadate, setIsUpdate] = React.useState(1);
   let [netPrice, setNetPrice] = React.useState(0);
- console.log(auth);
+
 
   React.useEffect(() => {
     async function getCartItem() {
       let response;
       try {
-        response = await fetch(`http://localhost:5000/user/${auth.userId}`, {
+        response = await fetch(`http://localhost:5000/user`, {
           method: "GET",
           headers: {
             Authorization: "Bearer " + auth.token,
           },
         });
-        console.log(response);
+        
         if (!response.ok) {
           throw new Error("error occured try again leter", 422);
         }
@@ -36,6 +36,7 @@ function Cart() {
         });
         setNetPrice(value);
         setUserCart([...responseData.Cart]);
+ 
       } catch (error) {
         console.log(error);
       }
@@ -47,7 +48,7 @@ function Cart() {
     let response;
     try {
       response = await fetch(
-        `http://localhost:5000/user/${auth.userId}/${idofproduct}`,
+        `http://localhost:5000/user/${idofproduct}`,
         {
           method: "PATCH",
           headers: {
@@ -61,7 +62,6 @@ function Cart() {
       }
       let responseData = await response.json();
       setIsUpdate((prevalue) => prevalue + 1);
-      console.log(responseData);
     } catch (error) {
       console.log(error );
     }
@@ -81,10 +81,11 @@ function Cart() {
       }),
       headers: {
         "Content-Type": "application/json",
+        Authorization: "Bearer " + auth.token,
       }, 
     });
     const order = await response.json();
-    console.log(order);
+  
 
     var options = {
       key: "rzp_test_pBjWhXmDvQr9bP",
@@ -101,11 +102,13 @@ function Cart() {
 
         const validateRes = await fetch(
           "http://localhost:5000/order/validate",
+          
           {
             method: "POST",
             body: JSON.stringify({...body , amount : amount}),
             headers: {
               "Content-Type": "application/json",
+              Authorization: "Bearer " + auth.token,
             },
           }
         );
@@ -144,7 +147,7 @@ function Cart() {
                 src={product.imageURL}
                 alt={product.name}
               />
-              {console.log(product._id)}
+              
               <div className="flex w-full flex-col justify-between pb-4">
                 <div className="flex w-full justify-between space-x-2 pb-2">
                   <div className="space-y-1">

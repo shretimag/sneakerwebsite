@@ -16,12 +16,13 @@ const MakeOrder = async (req, res, next) => {
     }
     res.json(order);
   } catch (err) {
-    console.log(err);
     return next(new HttpError("Error", 500));
   }
 };
 
 const ValidateOrderPayment = async (req, res, next) => {
+
+
   const { razorpay_order_id, razorpay_payment_id, razorpay_signature } =
     req.body;
 
@@ -44,15 +45,28 @@ const ValidateOrderPayment = async (req, res, next) => {
   } catch (error) {
     return new HttpError("error occued in processing ", 404);
   }
+
+
   var currentTime = new Date();
   let cartData = user.Cart;
-  user.Orders.push( { Items : cartData  , paymentId :razorpay_payment_id , orderId , razorpay_order_id  , date : currentTime , address : user.Address  , number : user.Number , amount : req.body.amount } );
-
+  user.Orders.push({
+    Items: cartData,
+    paymentId: razorpay_payment_id,
+    orderId : razorpay_order_id,
+    date: currentTime,
+    address: user.Address,
+    number: user.Number,
+    amount: req.body.amount,
+  });
+  let see;
   try {
-    await User.save();
+     see = await user.save();
   } catch (error) {
     return new HttpError("error occured try again", 404);
   }
+  console.log(see);
+
+
 
   res.json({
     msg: "success",

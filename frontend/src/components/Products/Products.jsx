@@ -71,7 +71,7 @@ function Products() {
 
   const filterShoesList = async () => {
     let response;
-    console.log("rgewgewf", filterObject);
+  
     try {
       response = await fetch("http://localhost:5000/products/filter", {
         method: "POST",
