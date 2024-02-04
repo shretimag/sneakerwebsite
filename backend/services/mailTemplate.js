@@ -14,7 +14,7 @@ exports.SignUpMail=(name)=>{
           intro: "Thanks for being a part of SneakHead",
           action:[
             {
-            instructions: "To verify your email, enter the following OTP code:",
+            instructions: "Shop best sneakers from SNEAK HEADS at best price",
             button: {
               color: "#22BC66", 
               text :"Thanks ",

@@ -2,10 +2,11 @@ import React from "react";
 import { useContext } from "react";
 import { AuthContext } from "../../Context/auth-context";
 import OrderCard from "./OrderCard";
+import EmptyOrder from "./EmptyOrder";
 
 function Order() {
   let auth = useContext(AuthContext);
-  let[check ,setCheck] = React.useState(false);
+  let [check, setCheck] = React.useState(false);
   let [orders, setOrders] = React.useState([]);
 
   React.useEffect(() => {
@@ -31,9 +32,9 @@ function Order() {
     auth.token && getOrderItem();
   }, [auth]);
 
-  return (
-    <>{check ? <OrderCard orderItem={orders} /> : <div> fjweh</div>}</>
-  );
+  console.log(orders);
+
+  return <> {check ?  (orders.length !==0 ? orders.map((item) => <OrderCard orderItem={item} />): <EmptyOrder/>) : <div></div>}</>;
 }
 
 export default Order;

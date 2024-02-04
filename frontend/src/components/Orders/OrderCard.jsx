@@ -1,14 +1,15 @@
 import React from "react";
 
 function OrderCard(props) {
+  console.log(props);
   props = props.orderItem;
- props = props[0];
+ 
 
   return (
-    <div className="mx-auto my-4 max-w-4xl md:my-6">
+    <div className="mx-auto my-4 max-w-4xl md:my-12 border-y-black">
       <div className="overflow-hidden rounded-xl border border-gray-100 shadow">
         <div className="grid grid-cols-1 md:grid-cols-2">
-          {/* Product List */}
+       
           <div className="px-5 py-6 md:border-r md:border-r-gray-200 md:px-8">
             <div className="flow-root">
               <ul className="-my-7 divide-y divide-gray-200">

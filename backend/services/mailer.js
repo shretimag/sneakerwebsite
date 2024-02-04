@@ -4,8 +4,8 @@ exports.ConfigMail = () => {
     service: "gmail",
     secure: false,
     auth: {
-      user: "aggarwalsiddharth49@gmail.com",
-      pass: "siulquowkodnmyjw",
+      user: "fakeuseruser540@gmail.com",
+      pass: "vvvm vbve vxab hpxz",
     },
   });
   return transporter;

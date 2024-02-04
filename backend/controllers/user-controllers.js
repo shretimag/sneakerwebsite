@@ -63,28 +63,28 @@ const signup = async (req, res, next) => {
     return next(new HttpError("signning up failed try again later ", 500));
   }
 
-  // const message = {
-  //   from: "aggarwalsiddharth49@gmail.com",
-  //   to: Email,
-  //   subject: "Thanks for Signing up ",
-  //   html: MailTemplates.SignUpMail(Name),
-  // };
-  // const transporter = mailService.ConfigMail();
+  const message = {
+    from: "fakeuseruser540@gmail.com",
+    to: Email,
+    subject: "Thanks for Signing up ",
+    html: MailTemplates.SignUpMail(Name),
+  };
+  const transporter = mailService.ConfigMail();
 
-  // transporter
-  //   .sendMail(message)
-  //   .then(() => {
-  //     return res.status(201).json({
-  //       status: "success",
-  //       message: "Mail sent successfully",
-  //       Email: Email,
-  //       Token: token,
-  //       UserId: createUser._id,
-  //     });
-  //   })
-  //   .catch(async (error) => {
-  //     console.log(error);
-  //   });
+  transporter
+    .sendMail(message)
+    .then(() => {
+      return res.status(201).json({
+        status: "success",
+        message: "Mail sent successfully",
+        Email: Email,
+        Token: token,
+        UserId: createUser._id,
+      });
+    })
+    .catch(async (error) => {
+      console.log(error);
+    });
   res.status(201).json({
     Token: token,
     UserId: createUser._id,
